@@ -1,0 +1,5 @@
+Options All -Indexes
+
+RewriteEngine On 
+
+RewriteRule ^([-a-zA-Z0-Z9/]+)$ index.php?url=$1
