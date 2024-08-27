@@ -1,9 +1,14 @@
+<?php
+
+session_start();
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Blank Page</title>
+  <title>Clinica Galeno</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -28,7 +33,10 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition skin-white sidebar-mini">
+<body class="hold-transition skin-white sidebar-mini login-page">
+<!--Para que sirve el login-page?
+Por ejemplo, si estás utilizando AdminLTE, la clase .login-page es utilizada para centrar y estilizar la página de inicio de sesión de
+ manera que el formulario aparezca de forma prominente y organizada.-->
 <!-- Site wrapper -->
 <div class="wrapper">
 
@@ -39,35 +47,35 @@
 
     include "modulos/cabecera.php";
   
-    include "modulos/menuLateral.php.php";
+    include "modulos/menuLateral.php";
   
     $url = array();
   
-    if(isset($_GET["url"])){
-  
-    $url[""] = explode("/", $_GET["url"]);
-  
-    if($url[0] == "inicio"){
-  
-      include"modulo/".$url[0].".php";
-  
-    }
-  }else{
-  
+    if(isset($_GET["url"])) {
+
+      $url = explode("/", $_GET["url"]);
+      
+      if($url[0] == "inicio" || $url[0] == "salir" || $url[0] == "perfil-Secretaria") {
+          include "modulos/".$url[0].".php";
+      }
+  } else {
       include "modulos/inicio.php";
-  
-    }
+  }
   
     echo '</div>';
   
-  }elseif(isset($_GET['url'])){
+  }else if(isset($_GET["url"])){
   
       if($_GET["url"]=="seleccionar"){
   
         include "modulos/seleccionar.php";
   
-      }
-  
+      }else if($_GET["url"]=="ingreso-secretaria"){
+        //Agregamos ruta a secretaria mediante el htdocs
+        include "modulos/ingreso-secretaria.php";
+      }    
+    }else{
+      include "modulos/seleccionar.php";
     }
     
 
