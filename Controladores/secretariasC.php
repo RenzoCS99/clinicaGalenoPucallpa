@@ -1,6 +1,7 @@
 <?php
 class SecretariasC{
 
+    //Ingreso secretaria
     public function IngresarSecretariaC(){
         //Esto sirve para verificar si la consulta trae data
         if(isset($_POST["usuario-Ing"])){
@@ -27,6 +28,34 @@ class SecretariasC{
                 }
             }
         }
+    }
+    //ver perfil de secretaria
+    public function VerPerfilSecretariaC(){
+
+        $tablaBD = "secretarias";
+        $id = $_SESSION["id"];
+        $resultado = SecretariasM::VerPerfilSecretariaM($tablaBD, $id);
+        echo'<tr>
+                            <td>'.$resultado["usuario"].'</td>
+
+                            <td>'.$resultado["clave"].'</td>
+
+                            <td>'.$resultado["nombre"].'</td>
+
+                            <td>'.$resultado["apellido"].'</td>';
+
+                            if($resultado["foto"]!=""){
+                                echo'<td><img src="'.$resultado["foto"].'" class="img-responsive" width="40 px"></td>';
+                            }else{
+                                
+                                echo'<td><img src="http://localhost/clinica/Vistas/img/defecto.png" class="img-responsive" width="40 px"></td>'; 
+                            }
+                            echo'<td>
+                                <a href="#">
+                                    <button class="btn btn-success"><i class="fa fa-pencil"></i></button>
+                                </a>
+                            </td>
+                        </tr>';
     }
 
 }
