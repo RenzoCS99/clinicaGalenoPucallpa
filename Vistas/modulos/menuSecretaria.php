@@ -26,7 +26,7 @@
         <li>
           <a href="http://localhost/clinica/pacientes">
             <i class="fa fa-users"></i>
-            <span>pacientes</span>
+            <span>Pacientes</span>
           </a>
         </li>
 

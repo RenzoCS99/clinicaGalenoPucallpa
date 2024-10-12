@@ -59,7 +59,8 @@ Por ejemplo, si estás utilizando AdminLTE, la clase .login-page es utilizada pa
 
       $url = explode("/", $_GET["url"]);
       
-      if($url[0] == "inicio" || $url[0] == "salir" || $url[0] == "perfil-Secretaria" || $url[0] == "perfil-S" || $url[0] == "consultorios" || $url[0] == "editarConsultorios") {
+      if($url[0] == "inicio" || $url[0] == "salir" || $url[0] == "perfil-Secretaria" || $url[0] == "perfil-S" || $url[0] == "consultorios" || $url[0] == "editarConsultorios"
+      || $url[0] == "doctores") {
           include "modulos/".$url[0].".php";
       }
   } else {
