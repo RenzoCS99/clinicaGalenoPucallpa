@@ -98,8 +98,15 @@
                             <h2>Consultorio:</h2>
                             <select class="form-control input-lg" name="consultorio">
                                 <option>Seleccionar...</option>
-                                <option value="Cardiologia">Cardiologia</option>
-                                <option value="Psicologia">Psicologia</option>
+
+                                <?php
+                                    $columna = null;
+                                    $valor = null;
+                                    $resultado = ConsultoriosC::VerConsultoriosC($columna, $valor);
+                                    foreach ($resultado as $key => $value) {
+                                        echo '<option value="'.$value["id"].'">'.$value["nombre"].'</option>';
+                                    }
+                                ?>
                             </select>
                         </div>
 
@@ -117,6 +124,10 @@
                     <button type="submit" class="btn btn-primary">Crear</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                 </div>
+                <?php
+                    $crear = new DoctoresC();
+                    $crear -> CrearDoctorC();
+                ?>
             </form>
         </div>
     </div>
