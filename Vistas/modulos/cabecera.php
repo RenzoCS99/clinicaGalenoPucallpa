@@ -26,7 +26,7 @@
                 echo '<img src="http://localhost/clinica/Vistas/img/defecto.png" class="user-image" alt="User Image">';
 
               }else{
-                echo '<img src="http://localhost/clinica/Vistas/'.$_SESSION["foto"].'" class="user-image" alt="User Image">';
+                echo '<img src="http://localhost/clinica/'.$_SESSION["foto"].'" class="user-image" alt="User Image">';
 
               }
 

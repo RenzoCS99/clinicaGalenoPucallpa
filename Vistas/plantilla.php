@@ -63,7 +63,7 @@ Por ejemplo, si estás utilizando AdminLTE, la clase .login-page es utilizada pa
       $url = explode("/", $_GET["url"]);
       
       if($url[0] == "inicio" || $url[0] == "salir" || $url[0] == "perfil-Secretaria" || $url[0] == "perfil-S" || $url[0] == "consultorios" || $url[0] == "editarConsultorios"
-      || $url[0] == "doctores") {
+      || $url[0] == "doctores" || $url[0] == "pacientes") {
           include "modulos/".$url[0].".php";
       }
   } else {
@@ -121,6 +121,7 @@ Por ejemplo, si estás utilizando AdminLTE, la clase .login-page es utilizada pa
 
 
 <script src="http://localhost/clinica/Vistas/js/doctores.js"></script>
+<script src="http://localhost/clinica/Vistas/js/pacientes.js"></script>
 <script>
   $(document).ready(function () {
     $('.sidebar-menu').tree()
