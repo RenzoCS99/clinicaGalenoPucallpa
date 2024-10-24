@@ -20,7 +20,7 @@
 
             </div>
             <div class="box-body">
-                <table class="table table-bordered table-hover table-striped">
+                <table class="table table-bordered table-hover table-striped DT">
                     <thead>
                         <tr>
                             <th>N°</th>
@@ -34,11 +34,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!--<?php
+                        <?php
                         $columna = null;
                         $valor = null;
 
-                        $resultado = ConsultoriosC::VerConsultoriosC($columna, $valor);
+                        $resultado = DoctoresC::VerDoctoresC($columna, $valor);
                         
 
                         if(!empty($resultado)){
@@ -46,15 +46,32 @@
                                 echo '
                                 <tr>
                                 <td>'.($key+1).'</td>
+                                <td>'.($value["apellido"]).'</td>
                                 <td>'.($value["nombre"]).'</td>
+                                
+                                ';
+                                if($value["foto"]==""){
+                                    echo '<td><img src="Vistas/img/defecto.png" width="40px"></td>';
+                                }else{
+                                    echo '<td><img src="'.($value["foto"]).'" width="40px"></td>';
+                                }
+
+                                $columna = "id";
+                                $valor = $value["id_consultorio"];
+
+                                $consultorio = ConsultoriosC::VerConsultoriosC($columna, $valor);
+
+                                echo'<td>'.($consultorio["nombre"]).'</td>
+                                <td>'.($value["usuario"]).'</td>
+                                <td>'.($value["clave"]).'</td>
                                 <td>
                                     <div class="btn-group">
-                                        <a href="http://localhost/clinica/editarConsultorios/'.($value["id"]).'">
-                                            <button class="btn btn-success"><i class="fa fa-pencil"></i>Editar</button>
-                                        </a>
-                                        <a href="http://localhost/clinica/consultorios/'.($value["id"]).'">
-                                            <button class="btn btn-danger"><i class="fa fa-times"></i>Borrar</button>
-                                        </a>
+                                        <button class="btn btn-success EditarDoctor" Did="'.($value["id"]).'" data-toggle="modal"
+                                        data-target="#EditarDoctor"><i class="fa fa-pencil"></i>
+                                        Editar</button>
+
+                                        <button class="btn btn-danger EliminarDoctor" Did="'.($value["id"]).'"
+                                        imgD="'.($value["foto"]).'""><i class="fa fa-times"></i>Borrar</button>
                                     </div>
                                 </td>
                             </tr>';
@@ -63,7 +80,7 @@
                             echo '<tr><td colspan="3" class="text-center">No hay consultorios registrados.</td></tr>';
                         }
                         
-                        ?>-->
+                        ?>
                     </tbody>
                 </table>
             </div>
@@ -132,3 +149,57 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" rol ="dialog" id="EditarDoctor">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="POST" role="form">
+                <div class="modal-body">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <h2>Apellido:</h2>
+                            <input type="text" class="form-control input-lg" id="apellidoE" name="apellidoE" required>
+                            <input type="hidden" id="Did" name="Did">
+                        </div>
+                        <div class="form-group">
+                            <h2>Nombre:</h2>
+                            <input type="text" class="form-control input-lg" id="nombreE" name="nombreE" required>
+                        </div>
+                        <div class="form-group">
+                            <h2>Sexo:</h2>
+                            <select class="form-control input-lg" name="sexoE" required="">
+                                <option  id="sexoE"></option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                            </select>
+                        </div>
+
+                        
+
+                        <div class="form-group">
+                            <h2>Usuario:</h2>
+                            <input type="text" class="form-control input-lg" id="usuarioE" name="usuarioE" required>
+                        </div>
+                        <div class="form-group">
+                            <h2>Clave:</h2>
+                            <input type="text" class="form-control input-lg" id="claveE" name="claveE" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">Guardar Cambios</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+                <?php
+                    $actualizar = new DoctoresC();
+                    $actualizar -> ActualizarDoctorC();
+                ?>
+            </form>
+        </div>
+    </div>
+</div>
+
+<?php
+    $borrarD = new DoctoresC();
+    $borrarD -> BorrarDoctorC();
+?>
