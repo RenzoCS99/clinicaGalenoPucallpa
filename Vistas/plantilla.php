@@ -52,6 +52,8 @@ Por ejemplo, si estás utilizando AdminLTE, la clase .login-page es utilizada pa
 
     if($_SESSION["rol"] == "Secretaria"){
       include "modulos/menuSecretaria.php";
+    }else if($_SESSION["rol"] == "Paciente"){
+      include "modulos/menuPaciente.php";
     }
   
     
@@ -63,7 +65,7 @@ Por ejemplo, si estás utilizando AdminLTE, la clase .login-page es utilizada pa
       $url = explode("/", $_GET["url"]);
       
       if($url[0] == "inicio" || $url[0] == "salir" || $url[0] == "perfil-Secretaria" || $url[0] == "perfil-S" || $url[0] == "consultorios" || $url[0] == "editarConsultorios"
-      || $url[0] == "doctores" || $url[0] == "pacientes") {
+      || $url[0] == "doctores" || $url[0] == "pacientes" || $url[0] == "perfil-Paciente" || $url[0] == "perfil-P" ) {
           include "modulos/".$url[0].".php";
       }
   } else {
@@ -81,7 +83,10 @@ Por ejemplo, si estás utilizando AdminLTE, la clase .login-page es utilizada pa
       }else if($_GET["url"]=="ingreso-secretaria"){
         //Agregamos ruta a secretaria mediante el htdocs
         include "modulos/ingreso-secretaria.php";
-      }    
+      }else if($_GET["url"]=="ingreso-paciente"){
+        //Agregamos ruta a secretaria mediante el htdocs
+        include "modulos/ingreso-paciente.php";
+      }      
     }else{
       include "modulos/seleccionar.php";
     }
