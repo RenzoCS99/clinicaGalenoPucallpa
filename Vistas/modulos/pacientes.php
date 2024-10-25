@@ -59,7 +59,7 @@
                                     <td>'.$value["clave"].'</td>
                                     <td>
                                         <div class="btn-group">
-                                            <button class="btn btn-success EditarDoctor" Did="" data-toggle="modal"
+                                            <button class="btn btn-success EditarPaciente" Pid="'.$value["id"].'" data-toggle="modal"
                                             data-target="#EditarPaciente"><i class="fa fa-pencil"></i>Editar Paciente</button>
                                             
                                             <button class="btn btn-danger EliminarPaciente" Pid="'.$value["id"].'" imgP="'.$value["foto"].'"><i class="fa fa-times"></i>Borrar</button>
@@ -100,7 +100,7 @@
 
                         <div class="form-group">
                             <h2>Usuario:</h2>
-                            <input type="text" class="form-control input-lg" name="usuario" required>
+                            <input type="text" class="form-control input-lg" id="usuario" name="usuario" required>
                         </div>
                         <div class="form-group">
                             <h2>Clave:</h2>
@@ -155,8 +155,8 @@
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
                 </div>
                 <?php
-                    //$actualizar = new DoctoresC();
-                    //$actualizar -> ActualizarDoctorC();
+                    $actualizar = new PacientesC();
+                    $actualizar -> ActualizarPacienteC();
                 ?>
             </form>
         </div>
