@@ -76,6 +76,33 @@
             }
             $pdo = null;
         }
+
+        //ingreso doctor
+        static public function IngresarDoctorM($tablaBD, $datosC){
+            $pdo = ConexionBD::cBD()->prepare("SELECT usuario, clave, apellido, nombre, sexo, foto, rol, id
+            FROM $tablaBD WHERE usuario = :usuario");
+            $pdo -> bindParam(":usuario", $datosC["usuario"], PDO::PARAM_STR);
+
+            $pdo -> execute();
+
+            return $pdo -> fetch();
+
+            $pdo = null;
+        }
+
+        //ver perfil doctor
+
+        static public function VerPerfilDoctorM($tablaBD, $id){
+            $pdo = ConexionBD::cBD()->prepare("SELECT usuario, clave, apellido, nombre, sexo, foto, rol, id,
+            horarioE, horarioS, id_consultorio FROM $tablaBD WHERE id = :id");
+            $pdo -> bindParam(":id", $id, PDO::PARAM_STR);
+
+            $pdo -> execute();
+
+            return $pdo -> fetch();
+
+            $pdo = null;
+        }
     }
 
 ?>

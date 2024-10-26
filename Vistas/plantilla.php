@@ -58,6 +58,8 @@ Por ejemplo, si estás utilizando AdminLTE, la clase .login-page es utilizada pa
       include "modulos/menuSecretaria.php";
     }else if($_SESSION["rol"] == "Paciente"){
       include "modulos/menuPaciente.php";
+    }else if($_SESSION["rol"] == "Doctor"){
+      include "modulos/menuDoctor.php";
     }
   
     
@@ -69,7 +71,8 @@ Por ejemplo, si estás utilizando AdminLTE, la clase .login-page es utilizada pa
       $url = explode("/", $_GET["url"]);
       
       if($url[0] == "inicio" || $url[0] == "salir" || $url[0] == "perfil-Secretaria" || $url[0] == "perfil-S" || $url[0] == "consultorios" || $url[0] == "editarConsultorios"
-      || $url[0] == "doctores" || $url[0] == "pacientes" || $url[0] == "perfil-Paciente" || $url[0] == "perfil-P" || $url[0] == "Ver-consultorios" || $url[0] == "Doctor"|| $url[0] == "historial"){
+      || $url[0] == "doctores" || $url[0] == "pacientes" || $url[0] == "perfil-Paciente" || $url[0] == "perfil-P" || $url[0] == "Ver-consultorios" || $url[0] == "Doctor"|| $url[0] == "historial" 
+      || $url[0] == "perfil-Doctor"){
           include "modulos/".$url[0].".php";
       }
   } else {
@@ -90,7 +93,10 @@ Por ejemplo, si estás utilizando AdminLTE, la clase .login-page es utilizada pa
       }else if($_GET["url"]=="ingreso-paciente"){
         //Agregamos ruta a secretaria mediante el htdocs
         include "modulos/ingreso-paciente.php";
-      }      
+      }else if($_GET["url"]=="ingreso-Doctor"){
+        //Agregamos ruta a secretaria mediante el htdocs
+        include "modulos/ingreso-Doctor.php";
+      }       
     }else{
       include "modulos/seleccionar.php";
     }
@@ -157,10 +163,7 @@ Por ejemplo, si estás utilizando AdminLTE, la clase .login-page es utilizada pa
             $eventos = []; // Arreglo para almacenar eventos válidos
             
             foreach ($resultado as $key => $value) {
-                // Eliminar la impresión de var_dump
-                // var_dump($value); // Comentar o eliminar esta línea
 
-                // Asegúrate de usar el nombre correcto de la clave
                 if ($value["id_Doctor"] == substr($_GET["url"], 7)) {
                     // Agregar evento al arreglo
                     $eventos[] = '{

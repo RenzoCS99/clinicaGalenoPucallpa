@@ -89,7 +89,7 @@
             $pdo = null;
         }
 
-        //
+        //actualizar
         static public function ActualizarPerfilPacienteM($tablaBD, $datosC){
             $pdo = ConexionBD::cBD()->prepare("UPDATE $tablaBD SET usuario  = :usuario, clave  = :clave, nombre  = :nombre, 
             apellido  = :apellido, documento  = :documento, foto  = :foto WHERE id = :id");
