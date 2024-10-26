@@ -13,6 +13,9 @@ require_once "Modelos/doctoresM.php";
 require_once "Controladores/pacientesC.php";
 require_once "Modelos/pacientesM.php";
 
+require_once "Controladores/citasC.php";
+require_once "Modelos/citasM.php";
+
 
 
 /*La instrucción require_once en PHP se utiliza para incluir y evaluar 

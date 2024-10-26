@@ -26,6 +26,10 @@ session_start();
   <!--DataTables-->
   <link rel="stylesheet" href="http://localhost/clinica/Vistas/bower_components/datatables.net-bs/css/dataTables.bootstrap.css">
   <link rel="stylesheet" href="http://localhost/clinica/Vistas/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+
+  <!--Full Calendar-->
+  <link rel="stylesheet" href="http://localhost/clinica/Vistas/bower_components/fullcalendar/dist/fullcalendar.min.css">
+  <link rel="stylesheet" href="http://localhost/clinica/Vistas/bower_components/fullcalendar/dist/fullcalendar.print.min.css" media="print">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -65,7 +69,7 @@ Por ejemplo, si estás utilizando AdminLTE, la clase .login-page es utilizada pa
       $url = explode("/", $_GET["url"]);
       
       if($url[0] == "inicio" || $url[0] == "salir" || $url[0] == "perfil-Secretaria" || $url[0] == "perfil-S" || $url[0] == "consultorios" || $url[0] == "editarConsultorios"
-      || $url[0] == "doctores" || $url[0] == "pacientes" || $url[0] == "perfil-Paciente" || $url[0] == "perfil-P" ) {
+      || $url[0] == "doctores" || $url[0] == "pacientes" || $url[0] == "perfil-Paciente" || $url[0] == "perfil-P" || $url[0] == "Ver-consultorios" || $url[0] == "Doctor"|| $url[0] == "historial"){
           include "modulos/".$url[0].".php";
       }
   } else {
@@ -124,12 +128,83 @@ Por ejemplo, si estás utilizando AdminLTE, la clase .login-page es utilizada pa
 <script src="http://localhost/clinica/Vistas/bower_components/datatables.net-bs/js/dataTables.bootstrap.js"></script>
 <script src="http://localhost/clinica/Vistas/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
+<!--Full Calendar-->
+<script src="http://localhost/clinica/Vistas/bower_components/moment/moment.js"></script>
+<script src="http://localhost/clinica/Vistas/bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
+<script src="http://localhost/clinica/Vistas/bower_components/fullcalendar/dist/locale/es.js"></script>
 
 <script src="http://localhost/clinica/Vistas/js/doctores.js"></script>
 <script src="http://localhost/clinica/Vistas/js/pacientes.js"></script>
 <script>
   $(document).ready(function () {
     $('.sidebar-menu').tree()
+  })
+
+  var date = new Date()
+  var d    = date.getDate(),
+      m    = date.getMonth(),
+      y    = date.getFullYear()
+
+  $('#calendar').fullCalendar({
+
+    hiddenDays: [0],
+
+    defaultView: 'agendaWeek',
+
+    events: [
+        <?php
+            $resultado = CitasC::VerCitasC();
+            $eventos = []; // Arreglo para almacenar eventos válidos
+            
+            foreach ($resultado as $key => $value) {
+                // Eliminar la impresión de var_dump
+                // var_dump($value); // Comentar o eliminar esta línea
+
+                // Asegúrate de usar el nombre correcto de la clave
+                if ($value["id_Doctor"] == substr($_GET["url"], 7)) {
+                    // Agregar evento al arreglo
+                    $eventos[] = '{
+                        id: '.$value["id"].',
+                        title: "'.$value["nyaP"].'",
+                        start: "'.$value["inicio"].'",
+                        end: "'.$value["fin"].'"
+                    }';
+                }
+            }
+
+            // Unir los eventos en una cadena y mostrarlos
+            echo implode(',', $eventos);
+        ?>
+    ],
+
+    dayClick:function(date, jsEvent, view){
+      $('#CitaModal').modal();
+
+      var fecha = date.format();
+
+      var hora2 = ("01:00:00").split(":");
+
+      fecha = fecha.split("T");
+
+      var dia = fecha[0];
+
+      var hora = (fecha[1].split(":"));
+
+      var h1 = parseFloat(hora[0]);
+
+      var h2 = parseFloat(hora2[0]);
+
+      var horaFinal = h1+h2;
+
+      $('#fechaC').val(dia);
+
+      $('#horaC').val(h1+":00:00");
+
+      $('#fyhIC').val(fecha[0]+" "+h1+":00:00");
+
+      $('#fyhFC').val(fecha[0]+" "+horaFinal+":00:00");
+    }
+
   })
 </script>
 </body>
