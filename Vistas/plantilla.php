@@ -60,6 +60,8 @@ Por ejemplo, si estás utilizando AdminLTE, la clase .login-page es utilizada pa
       include "modulos/menuPaciente.php";
     }else if($_SESSION["rol"] == "Doctor"){
       include "modulos/menuDoctor.php";
+    }else if($_SESSION["rol"] == "Administrador"){
+      include "modulos/menuAdmin.php";
     }
   
     
@@ -72,7 +74,7 @@ Por ejemplo, si estás utilizando AdminLTE, la clase .login-page es utilizada pa
       
       if($url[0] == "inicio" || $url[0] == "salir" || $url[0] == "perfil-Secretaria" || $url[0] == "perfil-S" || $url[0] == "consultorios" || $url[0] == "editarConsultorios"
       || $url[0] == "doctores" || $url[0] == "pacientes" || $url[0] == "perfil-Paciente" || $url[0] == "perfil-P" || $url[0] == "Ver-consultorios" || $url[0] == "Doctor"|| $url[0] == "historial" 
-      || $url[0] == "perfil-Doctor" || $url[0] == "perfil-D"){
+      || $url[0] == "perfil-Doctor" || $url[0] == "perfil-D" || $url[0] == "Citas"){
           include "modulos/".$url[0].".php";
       }
   } else {
@@ -96,7 +98,10 @@ Por ejemplo, si estás utilizando AdminLTE, la clase .login-page es utilizada pa
       }else if($_GET["url"]=="ingreso-Doctor"){
         //Agregamos ruta a secretaria mediante el htdocs
         include "modulos/ingreso-Doctor.php";
-      }       
+      }else if($_GET["url"]=="ingreso-Admin"){
+        //Agregamos ruta a admin mediante el htdocs
+        include "modulos/ingreso-Administrador.php";
+      }           
     }else{
       include "modulos/seleccionar.php";
     }
@@ -172,6 +177,13 @@ Por ejemplo, si estás utilizando AdminLTE, la clase .login-page es utilizada pa
                         start: "'.$value["inicio"].'",
                         end: "'.$value["fin"].'"
                     }';
+                }else if($value["id_Doctor"] == substr($_GET["url"], 6)){
+                    $eventos[] = '{
+                      id: '.$value["id"].',
+                      title: "'.$value["nyaP"].'",
+                      start: "'.$value["inicio"].'",
+                      end: "'.$value["fin"].'"
+                  }';
                 }
             }
 
@@ -179,6 +191,30 @@ Por ejemplo, si estás utilizando AdminLTE, la clase .login-page es utilizada pa
             echo implode(',', $eventos);
         ?>
     ],
+
+    <?php
+      if($_SESSION["rol"]=="Paciente"){
+        $columna="id";
+        $valor=substr($_GET["url"], 7);
+
+        $resultado = DoctoresC::DoctorC($columna, $valor);
+        echo'
+          scrollTime:"'.$resultado["horarioE"].'",
+          minTime:"'.$resultado["horarioE"].'",
+          maxTime:"'.$resultado["horarioS"].'",
+        ';
+      }else if($_SESSION["rol"]=="Doctor"){
+        $columna="id";
+        $valor=substr($_GET["url"], 6);
+
+        $resultado = DoctoresC::DoctorC($columna, $valor);
+        echo'
+          scrollTime:"'.$resultado["horarioE"].'",
+          minTime:"'.$resultado["horarioE"].'",
+          maxTime:"'.$resultado["horarioS"].'",
+          ';
+      }
+    ?>
 
     dayClick:function(date, jsEvent, view){
       $('#CitaModal').modal();

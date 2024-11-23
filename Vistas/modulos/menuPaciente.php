@@ -29,5 +29,4 @@
 
       </ul>
     </section>
-    <!-- /.sidebar -->
   </aside>
