@@ -29,7 +29,7 @@
       </div>
       <?php
       
-        $ingreso = new AdminC();
+        $ingreso = new adminC();
         $ingreso->IngresarAdminC();
 
       ?>

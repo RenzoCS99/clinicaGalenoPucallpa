@@ -98,7 +98,7 @@ Por ejemplo, si estás utilizando AdminLTE, la clase .login-page es utilizada pa
       }else if($_GET["url"]=="ingreso-Doctor"){
         //Agregamos ruta a secretaria mediante el htdocs
         include "modulos/ingreso-Doctor.php";
-      }else if($_GET["url"]=="ingreso-Admin"){
+      }else if($_GET["url"]=="ingreso-Administrador"){
         //Agregamos ruta a admin mediante el htdocs
         include "modulos/ingreso-Administrador.php";
       }           

@@ -18,7 +18,7 @@
 
         <li>
           <a href="http://localhost/clinica/secretarias">
-            <i class="fa fa-user-md"></i>
+            <i class="fa fa-female"></i>
             <span>Secretarias</span>
           </a>
         </li>
