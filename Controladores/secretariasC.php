@@ -135,4 +135,52 @@ class SecretariasC{
         }
     }
 
+    //ver secretarias
+    public static function VerSecretariasC(){
+        $tablaBD = "secretarias";
+        $resultado = secretariasM::VerSecretariasM($tablaBD);
+
+        return $resultado;
+
+    }
+
+    //crear secretarias
+    public static function CrearSecretariaC(){
+        if(isset($_POST["rolS"])){
+            $tablaBD = "secretarias";
+            $datosC = array("nombre"=>$_POST["nombre"], "apellido"=>$_POST["apellido"], "usuario"=>$_POST["usuario"], "clave"=>$_POST["clave"], "rol"=>$_POST["rolS"]);
+            
+            $resultado = secretariasM::CrearSecretariaM($tablaBD, $datosC);
+
+            if($resultado==true){
+                echo'
+                    <script>
+                        window.location="secretarias";
+                    </script>
+                ';
+            }
+        }
+    }
+
+    //borrar secretarias
+    public static function BorrarSecretariaC(){
+        if(isset($_GET["Sid"])){
+            $tablaBD = "secretarias";
+            $id = $_GET["Sid"];
+
+            if($_GET["imgS"] != ""){
+                unlink($_GET["imgS"]);
+            }
+
+            $resultado = secretariasM::BorrarSecretariaM($tablaBD, $id);
+
+            if($resultado==true){
+                echo'
+                    <script>
+                        window.location="secretarias";
+                    </script>
+                ';
+            }
+        }
+    }
 }

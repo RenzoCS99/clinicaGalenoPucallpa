@@ -64,12 +64,94 @@ class AdminC{
                             
         echo'
                 <td>
-                    <a href="">
+                    <a href="http://localhost/clinica/perfil-A/'.$resultado["id"].'">
                         <button class="btn btn-success"><i class="fa fa-pencil"></i></button>
                     </a>
                 </td>
             </tr>
         ';
+    }
+
+    //editar perfil admin C
+    public function EditarPerfilAdminC(){
+        $tablaBD = "administradores";
+        $id = $_SESSION["id"];
+        $resultado = AdminM::VerPerfilAdminM($tablaBD, $id);
+
+        echo '<form method="post" enctype="multipart/form-data">
+                <div class = "row">
+                    <div class="col-md-6 col-xs-12">
+
+                        <h2>Nombre:</h2>
+                        <input type="text" class="input-lg" name="nombreP" value="'.$resultado["nombre"].'">
+                        <input type="hidden" class="input-lg" name="Aid" value="'.$resultado["id"].'">
+
+                        <h2>Apellido:</h2>
+                        <input type="text" class="input-lg" name="apellidoP" value="'.$resultado["apellido"].'">
+
+                        <h2>Usuario:</h2>
+                        <input type="text" class="input-lg" name="usuarioP" value="'.$resultado["usuario"].'">
+
+                        <h2>Contraseña:</h2>
+                        <input type="text" class="input-lg" name="claveP" value="'.$resultado["clave"].'">
+
+                    </div>
+
+                    <div class="col-md-6 col-xs-12">
+                        <br><br>
+                        <input type="file" name="imgP">
+                        <br>';
+                        if($resultado["foto"]==""){
+                            echo'<img src="http://localhost/clinica/Vistas/img/defecto.png" width="200px;">';
+                        }else{
+                            echo'<img src="http://localhost/clinica/'.$resultado["foto"].'" width="200px;">';
+                        }
+                        echo'<input type="hidden" name="imgActual" value="'.$resultado["foto"].'">
+                        <br><br>
+                        <button type="submit" class="btn btn-success">Guardar Cambios</button>
+                    </div>
+                </div>
+        </form>';
+    }
+
+    //actualizar perfil admin
+    public function ActualizarPerfilAdminC(){
+        if(isset($_POST["Aid"])){
+            $rutaImg = $_POST["imgActual"];
+            if(isset($_FILES["imgP"]["tmp_name"])&&!empty($_FILES["imgP"]["tmp_name"])){
+                if(!empty($_POST["imgActual"])){
+                    unlink($_POST["imgActual"]);
+                }
+
+                if($_FILES["imgP"]["type"] == "image/jpeg"){
+                    $nombre = mt_rand(10,999);
+                    $rutaImg = "Vistas/img/Usuarios/A-".$nombre.".jpg";
+                    $foto = imagecreatefromjpeg($_FILES["imgP"]["tmp_name"]);
+                    imagejpeg($foto, $rutaImg);
+                }
+
+                if($_FILES["imgP"]["type"] == "image/png"){
+                    $nombre = mt_rand(10,999);
+                    $rutaImg = "Vistas/img/Usuarios/A-".$nombre.".png";
+                    $foto = imagecreatefrompng($_FILES["imgP"]["tmp_name"]);
+                    imagepng($foto, $rutaImg);
+                }
+            }
+
+            $tablaBD = "administradores";
+            $datosC = array("id"=>$_POST["Aid"], "usuario"=>$_POST["usuarioP"], "clave"=>$_POST["claveP"], 
+                            "nombre"=>$_POST["nombreP"], "apellido"=>$_POST["apellidoP"], "foto"=>$rutaImg);
+
+            $resultado = AdminM::ActualizarPerfilAdminM($tablaBD, $datosC);
+
+            if($resultado==true){
+                echo'
+                    <script>
+                        window.location = "http://localhost/clinica/perfil-A/'.$resultado["id"].'"
+                    </script>
+                ';
+            }
+        }
     }
 }
 ?>
