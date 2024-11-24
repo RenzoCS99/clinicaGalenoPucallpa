@@ -17,5 +17,20 @@
     
             return $pdo->fetch(PDO::FETCH_ASSOC); // Devuelve un array asociativo si encuentra datos
         }
+
+        //Ver perfil admin
+        static public function VerPerfilAdminM($tablaBD, $id){
+
+            $pdo = ConexionBD::cBD()->prepare(
+                "SELECT id, usuario, clave, nombre, apellido, foto FROM $tablaBD WHERE id = :id");
+    
+            $pdo->bindParam(":id", $id, PDO::PARAM_INT);
+    
+            $pdo->execute();
+    
+            return $pdo->fetch(PDO::FETCH_ASSOC); // Devuelve un array asociativo si encuentra datos
+
+        }
     }
+
 ?>
