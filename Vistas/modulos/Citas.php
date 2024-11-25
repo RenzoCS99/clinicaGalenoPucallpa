@@ -136,7 +136,7 @@
 
                 <?php
                     $enviarC = new CitasC();
-                    $enviarC -> PedirCitaDoctorC();
+                    $enviarC->PedirCitaSecretariaC();
                 ?>
             </form>
         </div>

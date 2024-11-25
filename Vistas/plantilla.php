@@ -11,6 +11,13 @@ session_start();
   <title>Clinica Galeno</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  
+  <?php
+    $favicon= new InicioC();
+    $favicon-> FaviconC();
+  ?>
+
+  <!--<link rel="icon" type="" href="Vistas/img/favicon.png">-->
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="http://localhost/clinica/Vistas/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
@@ -74,7 +81,8 @@ Por ejemplo, si estás utilizando AdminLTE, la clase .login-page es utilizada pa
       
       if($url[0] == "inicio" || $url[0] == "salir" || $url[0] == "perfil-Secretaria" || $url[0] == "perfil-S" || $url[0] == "consultorios" || $url[0] == "editarConsultorios"
       || $url[0] == "doctores" || $url[0] == "pacientes" || $url[0] == "perfil-Paciente" || $url[0] == "perfil-P" || $url[0] == "Ver-consultorios" || $url[0] == "Doctor"|| $url[0] == "historial" 
-      || $url[0] == "perfil-Doctor" || $url[0] == "perfil-D" || $url[0] == "Citas" || $url[0] == "perfil-Administrador" || $url[0] == "perfil-A" || $url[0] == "secretarias"){
+      || $url[0] == "perfil-Doctor" || $url[0] == "perfil-D" || $url[0] == "Citas" || $url[0] == "perfil-Administrador" || $url[0] == "perfil-A" || $url[0] == "secretarias" || $url[0] == "inicio-editar"
+      || $url[0] == "SecretariaCitas"|| $url[0] == "verConsultorios-secretaria"){
           include "modulos/".$url[0].".php";
       }
   } else {
@@ -186,9 +194,15 @@ Por ejemplo, si estás utilizando AdminLTE, la clase .login-page es utilizada pa
                       start: "'.$value["inicio"].'",
                       end: "'.$value["fin"].'"
                   }';
-                }
+                }else if($value["id_Doctor"] == substr($_GET["url"], 16)){
+                  $eventos[] = '{
+                    id: '.$value["id"].',
+                    title: "'.$value["nyaP"].'",
+                    start: "'.$value["inicio"].'",
+                    end: "'.$value["fin"].'"
+                }';
             }
-
+          }
             // Unir los eventos en una cadena y mostrarlos
             echo implode(',', $eventos);
         ?>
@@ -208,6 +222,16 @@ Por ejemplo, si estás utilizando AdminLTE, la clase .login-page es utilizada pa
       }else if($_SESSION["rol"]=="Doctor"){
         $columna="id";
         $valor=substr($_GET["url"], 6);
+
+        $resultado = DoctoresC::DoctorC($columna, $valor);
+        echo'
+          scrollTime:"'.$resultado["horarioE"].'",
+          minTime:"'.$resultado["horarioE"].'",
+          maxTime:"'.$resultado["horarioS"].'",
+          ';
+      }else if($_SESSION["rol"]=="Secretaria"){
+        $columna="id";
+        $valor=substr($_GET["url"], 16);
 
         $resultado = DoctoresC::DoctorC($columna, $valor);
         echo'

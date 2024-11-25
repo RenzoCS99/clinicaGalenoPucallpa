@@ -17,6 +17,13 @@
         </li>
 
         <li>
+          <a href="http://localhost/clinica/verConsultorios-secretaria">
+            <i class="fa fa-medkit"></i>
+            <span>Citas</span>
+          </a>
+        </li>
+
+        <li>
           <a href="http://localhost/clinica/consultorios">
             <i class="fa fa-medkit"></i>
             <span>Consultorios</span>

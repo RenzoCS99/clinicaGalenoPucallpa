@@ -53,4 +53,31 @@ class CitasM extends ConexionBD{
         $pdo = null;
 
     }
+
+
+    //pedir citas como secretarias
+    static public function PedirCitaSecretariaM($tablaBD, $datosC){
+        // Prepara la consulta SQL
+        $pdo = ConexionBD::cBD()->prepare("INSERT INTO $tablaBD 
+            (id_Doctor, id_Consultorio, id_Paciente, nyaP, documento, inicio, fin) 
+            VALUES (:id_Doctor, :id_Consultorio, :id_Paciente, :nyaP, :documento, :inicio, :fin)");
+    
+        // Enlaza los parámetros con los valores
+        $pdo->bindParam(":id_Doctor", $datosC["Did"], PDO::PARAM_INT);
+        $pdo->bindParam(":id_Consultorio", $datosC["Cid"], PDO::PARAM_INT);
+        $pdo->bindParam(":id_Paciente", $datosC["Pid"], PDO::PARAM_INT);
+        $pdo->bindParam(":nyaP", $datosC["nyaC"], PDO::PARAM_STR);
+        $pdo->bindParam(":documento", $datosC["documentoP"], PDO::PARAM_STR);
+        $pdo->bindParam(":inicio", $datosC["fyhIC"], PDO::PARAM_STR);
+        $pdo->bindParam(":fin", $datosC["fyhFC"], PDO::PARAM_STR);
+    
+        // Ejecuta la consulta y verifica el resultado
+        if($pdo->execute()){
+            return true; // Inserción exitosa
+        } else {
+            return false; // Error en la inserción
+        }
+    
+        $pdo = null; // Cierra la conexión
+    }
 }
